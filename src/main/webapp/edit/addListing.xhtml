@@ -6,6 +6,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
+	
+<f:metadata>
+        <f:event type="preRenderView" listener="#{listingBean.resetListing}"/>
+</f:metadata>
 
 <ui:composition template="/templates/layout.xhtml">
 	<ui:define name="title">Add Listing</ui:define>
@@ -24,7 +28,7 @@
 				</h:inputText>
 
 				<h:outputText value=" " />
-				<h:commandButton id="submitButton" value="Save" action="#{listingBean.saveListing}" >
+				<h:commandButton id="submitButton" value="Save" action="#{listingBean.addListing}" >
 					<f:param name="id" value="#{listingBean.listing.id}"/>
 				</h:commandButton>
 			</h:panelGrid>

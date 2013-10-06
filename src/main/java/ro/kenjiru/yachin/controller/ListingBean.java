@@ -10,7 +10,7 @@ import ro.kenjiru.yachin.domain.Listing;
 import ro.kenjiru.yachin.service.ListingService;
 
 @Component
-@Scope("request")
+@Scope("session")
 public class ListingBean {
 	@Autowired
 	private ListingService listingService;
@@ -34,7 +34,12 @@ public class ListingBean {
 	}
 	
 	public String saveListing() {
-		listingService.saveListing(listing);
+		listingService.updateListing(listing);
+		return "/view/viewListing?faces-redirect=true&amp;includeViewParams=true";
+	}
+	
+	public String addListing() {
+		listingService.addListing(listing);
 		return "/view/viewListing?faces-redirect=true&amp;includeViewParams=true";
 	}
 	
@@ -59,5 +64,9 @@ public class ListingBean {
 	
 	public void loadListing(Long id) {
 		listing = listingService.getById(id);
+	}
+	 
+	public void resetListing() {
+		listing = new Listing();
 	}
 }

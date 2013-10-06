@@ -7,11 +7,10 @@
                 http://www.springframework.org/schema/security
                 http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     <!-- Spring Security is the default namespace here -->
-	
-	<global-method-security secured-annotations="enabled">
-		<!-- AspectJ pointcut expression that locates our "post" method and applies security that way
-		<protect-pointcut expression="execution(* bigbank.*Service.post*(..))" access="ROLE_TELLER"/>
-		-->
+	<!-- enabled secured/pre/post annotations-->
+	<global-method-security secured-annotations="enabled"
+		pre-post-annotations="enabled"
+		authentication-manager-ref="authenticationManager">
 		<expression-handler ref="expressionHandler"/>
 	</global-method-security>
 	
@@ -29,7 +28,12 @@
         <authentication-provider user-service-ref="customUserDetailsService"/>
     </authentication-manager>
     
+    <beans:bean id="permissionEvaluator"
+          class="ro.kenjiru.yachin.service.security.ModifyListingsEvaluator">
+    </beans:bean>
     <beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
     <beans:bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+    <!-- for hasPermission annotation -->
+    	<beans:property name="permissionEvaluator" ref="permissionEvaluator"/>
     </beans:bean>
 </beans:beans>

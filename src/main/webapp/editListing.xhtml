@@ -17,7 +17,7 @@
 			<h:panelGrid columns="2">
 				<h:outputLabel for="idOutput" value="Id" />
 				<h:outputText id="idOutput" value="#{listingBean.listing.id}" />
-
+				<h:outputText value="#{listingBean.listing.owner.username}" />
 				<h:outputLabel for="title" value="Title" />
 				<h:inputText id="title" value="#{listingBean.listing.title}" />
 

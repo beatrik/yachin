@@ -14,8 +14,10 @@
 <h:body>
 
 	<h:panelGroup>
-		<h:outputText value="Logged in as #{request.remoteUser}" />
-		<h:outputLink value="#{request.contextPath}/j_spring_security_logout"
+		<h:outputText rendered="#{request.remoteUser == null}" value="Not logged in" />&nbsp;
+		<h:outputLink rendered="#{request.remoteUser == null}" value="../login.xhtml">Log in</h:outputLink>
+		<h:outputText rendered="#{request.remoteUser != null}" value="Logged in as #{request.remoteUser}" />
+		<h:outputLink rendered="#{request.remoteUser != null}" value="#{request.contextPath}/j_spring_security_logout"
 			style="float: right;">Logout</h:outputLink>
 	</h:panelGroup>
 	<h:panelGrid columns="2" width="100%">

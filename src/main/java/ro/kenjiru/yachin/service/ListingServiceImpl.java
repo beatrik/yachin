@@ -23,15 +23,20 @@ public class ListingServiceImpl implements ListingService {
 	
 	@Override
 	@Transactional(readOnly=false)
-	@PreAuthorize("isAuthenticated()") 
-	public void saveListing(Listing listing) {
+	@PreAuthorize("isAuthenticated() and hasPermission(#listing, 'isOwner') or hasRole('ROLE_ADMIN')") 
+	public void updateListing(Listing listing) {
+		listingDao.saveListing(listing);
+	}
+
+	@Override
+	@Transactional(readOnly=false)
+	@PreAuthorize("isAuthenticated()")
+	public void addListing(Listing listing) {
 		listing.setSubmitDate(new Date());
-		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = ((User)auth.getPrincipal()).getUsername();
 		ro.kenjiru.yachin.domain.User user = userService.getByUsername(username);
 		listing.setOwner(user);
-		
 		listingDao.saveListing(listing);
 	}
 	

@@ -12,7 +12,7 @@
 	<ui:define name="content">
 		<h:form>
 			<h:panelGrid columns="3">
-				<h:dataTable var="listing" value="#{listingBean.getAllListings()}">
+				<h:dataTable var="listing" value="#{listingBean.allListings}">
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="Id" />
@@ -45,9 +45,11 @@
 						<f:facet name="header">
 							<h:outputText value="Actions" />
 						</f:facet>
+						<h:panelGroup rendered="#{listingBean.showEditDelLink(listing)}">
                         <h:commandLink action="#{listingBean.deleteListing(listing)}"
                                        value="Delete"/> |
                         <h:outputLink value="../edit/editListing.xhtml?id=#{listing.id}">Edit</h:outputLink>
+                        </h:panelGroup>
 					</h:column>
 				</h:dataTable>
 			</h:panelGrid>

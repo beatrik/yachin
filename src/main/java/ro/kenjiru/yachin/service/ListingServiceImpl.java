@@ -42,6 +42,7 @@ public class ListingServiceImpl implements ListingService {
 	
 	@Override
 	@Transactional(readOnly=false)
+	@PreAuthorize("isAuthenticated() and hasPermission(#listing, 'isOwner') or hasRole('ROLE_ADMIN')")
 	public void deleteListing(Listing listing) {
 		listingDao.deleteListing(listing);
 	}
